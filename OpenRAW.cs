@@ -105,6 +105,7 @@ namespace OpenRAW
 
         public static bool IsExtensionRaw(string new_extension)
         {
+			new_extension = new_extension.ToLower();
             foreach (string ext in raw_extensions)
             {
                 if (new_extension == ext)
