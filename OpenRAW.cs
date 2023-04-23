@@ -9,10 +9,13 @@ namespace OpenRAW
         static void Main(string[] args)
         {
             // check args amount
-            if (args.Length != 2) ConsoleInterface.Exits.NotEnoughArgs();
+            if (args.Length != 2 && args.Length != 3) ConsoleInterface.Exits.NotEnoughArgs();
 
             string editor_path = args[0];
             string file_path = args[1];
+
+            string custom_args = "";
+            if (args.Length == 3) custom_args = " " + args[2];
 
             VariantManager manager = null;
             try
@@ -31,7 +34,7 @@ namespace OpenRAW
             Process editor = new Process();
             editor.StartInfo.FileName = editor_path;
 
-            
+
             if (manager.Variants.Length == 1) // only source file found, open it
             {
                 editor.StartInfo.Arguments = manager.Variants[0].Filepath;
@@ -39,7 +42,7 @@ namespace OpenRAW
             else // multiple files, ask user to choose one
             {
                 int users_choice = ConsoleInterface.VariantsDialogue(manager.Variants);
-                editor.StartInfo.Arguments = manager.Variants[users_choice].Filepath;
+                editor.StartInfo.Arguments = manager.Variants[users_choice].Filepath + custom_args;
             }
             editor.Start();
             ConsoleInterface.Exits.Success();
@@ -90,11 +93,11 @@ namespace OpenRAW
             {
                 if (variants[i].IsRaw)
                 {
-                    FileVariants tmp = variants[last_raw+1];
-                    variants[last_raw+1] = variants[i];
+                    FileVariants tmp = variants[last_raw + 1];
+                    variants[last_raw + 1] = variants[i];
                     variants[i] = tmp;
                     last_raw = i;
-                } 
+                }
             }
         }
 
