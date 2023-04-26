@@ -15,7 +15,7 @@ namespace OpenRAW
             string file_path = args[1];
 
             string custom_args = "";
-            if (args.Length == 3) custom_args = " " + args[2];
+            if (args.Length == 3) custom_args = " " + args[2] + " ";
 
             VariantManager manager = null;
             try
@@ -42,7 +42,7 @@ namespace OpenRAW
             else // multiple files, ask user to choose one
             {
                 int users_choice = ConsoleInterface.VariantsDialogue(manager.Variants);
-                editor.StartInfo.Arguments = manager.Variants[users_choice].Filepath + custom_args;
+                editor.StartInfo.Arguments = custom_args + manager.Variants[users_choice].Filepath;
             }
             editor.Start();
             ConsoleInterface.Exits.Success();
